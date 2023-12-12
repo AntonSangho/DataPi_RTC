@@ -8,7 +8,7 @@ temp_wire = onewire.OneWire(data) # create a OneWire bus on GPIO1
 temp_sensor = ds18x20.DS18X20(temp_wire) # create a DS18X20 temperature sensor object
 
 roms = temp_sensor.scan() # scan for devices on the bus
-print(len(roms), 'temperature sensros found')
+print(len(roms), 'temperature sensor found')
 
 while True:
     print('temperatures:', end=' ')
