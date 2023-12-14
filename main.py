@@ -26,28 +26,28 @@ temp_wire = onewire.OneWire(data)
 temp_sensor = ds18x20.DS18X20(temp_wire)
 roms = temp_sensor.scan()
 
-# 파일 초기화
-file = open('temperature_data.csv', 'w')
-file.write('Time,Temperature\n')
-
 # 버튼 핸들러 함수
 def Rbutton_handler(pin):
     global sensing_active
-    sensing_active = True
+    sensing_active = not sensing_active  # 상태 전환
 
 def Lbutton_handler(pin):
-    global recording_active
+    global recording_active, file
     recording_active = not recording_active
     if recording_active:
         buzzer.duty_u16(30000)
         buzzer.freq(1000)
         utime.sleep(0.1)
         buzzer.duty_u16(0)
+        # 파일 초기화 및 시작
+        file = open('temperature_data.csv', 'w')
+        file.write('Time,Temperature\n')
     else:
         buzzer.duty_u16(30000)
         buzzer.freq(500)
         utime.sleep(0.1)
         buzzer.duty_u16(0)
+        file.close()  # 파일 닫기
 
 # 버튼에 핸들러 등록
 Rbutton.irq(trigger=Pin.IRQ_FALLING, handler=Rbutton_handler)
@@ -78,6 +78,3 @@ while True:
     else:
         Rled.value(0)  # Rled 끄기
     utime.sleep(0.1)
-
-# 파일 닫기
-file.close()
