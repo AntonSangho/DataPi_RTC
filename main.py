@@ -6,6 +6,7 @@ import onewire, ds18x20
 # 글로벌 변수
 sensing_active = False
 recording_active = False
+recording_interval = 10  # 기록 간격을 초 단위로 설정 (예: 1초)
 
 # LED 및 버튼 설정
 YLed = Pin(22, Pin.OUT)
@@ -73,8 +74,9 @@ while True:
             dateTime = ds3231.get_time()
             timestamp = "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}".format(dateTime[0], dateTime[1], dateTime[2], dateTime[3], dateTime[4], dateTime[5])
             data_line = "{}, {:6.2f}\n".format(timestamp, t)
+            print(t)
             file.write(data_line)
-            utime.sleep(1)
+            utime.sleep(recording_interval)  # 사용자가 설정한 기록 간격에 따라 대기
     else:
         Rled.value(0)  # Rled 끄기
     utime.sleep(0.1)

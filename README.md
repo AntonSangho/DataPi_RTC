@@ -6,8 +6,8 @@
 |----------------|---------------|
 | `Rbutton` (오른쪽 버튼) | GPIO 13번    |
 | `Lbutton` (왼쪽 버튼)   | GPIO 2번     |
-| `YLed`         | GPIO 22번    |
-| `Rled`         | GPIO 28번    |
+| `YLed`(노란색 LED)         | GPIO 22번    |
+| `Rled` (빨간색 LED)         | GPIO 28번    |
 | `buzzer`       | GPIO 15번    |
 | `DS3231 RTC 모듈` | SDA (GPIO 8번), SCL (GPIO 9번) |
 | `DS18x20 온도 센서` | GPIO 1번     |
@@ -23,13 +23,10 @@
 - `Lbutton` (왼쪽 버튼): 온도 데이터 기록을 시작/중단합니다. 데이터는 `temperature_data.csv` 파일에 저장됩니다. 이 기능이 활성화되면 `Rled`가 켜지고, `buzzer`가 울립니다.
 
 
-# matlab library를 활용한 데이터 시각화 
-
-
-# 오픈 API를 활용한 세계 날씨 데이터 가져오기 :  
+# 오픈 API를 활용한 세계 날씨 데이터 가져오기 : [Openweather.py](/Openweather.py)  
 
 1. [openweathermap](https://openweathermap.org/)에 접속하기 
-2. 회원 가입하기 
+2. openweathermap에 회원 가입하기 
 3. 알고 싶은 지역을 검색하기 
 4. 해당 지역은 본인의 API를 이용해서 확인하기
 
