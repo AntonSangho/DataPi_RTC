@@ -12,9 +12,15 @@
 ## 실습목록   
 ### DataPi로 데이터 수집   
 1. DataPi에 Micropython 설치하기  
-    - Github에 접속하여 [Code] -> [Download Zip] 
-2. lib폴더를 Raspberry pi Pico에 업로드 하기  
-3. `main.py` 실행하기   
+    - [Github](/https://github.com/microschool-kr/AI-Challenge-Biodiversity-DataPi-kit)에 접속하여 [Code] -> [Download Zip] 
+    ![download](/img/download.png)
+    - Micropython폴더에 `RPI_PICO_W-20231005-v1.21.0.uf2`파일을 RPI-RP2 드라이브에 옮기기 
+    ![draganddrop](/img/draganddrop.png)
+    - Thonny를 실행하여 RaspberryPi Pico가 포트로 잡히는지 확인![port](/img/port.png) 
+2. Thonny를 이용하여 lib폴더를 Raspberry pi Pico에 업로드 하기  
+![uploadto](./img/uploadto.png)
+3. Thonny로 `main.py` 실행하기   
+![run](/img/run.png)
 4. DataPi로 온도 데이터 수집하기   
     - 온도 센싱 기능 
         - 버튼(오른쪽)을 **1초 이하**로 누르면 시작/중단합니다. 
@@ -23,8 +29,10 @@
         - 버튼(오른쪽)을 **1초 이상**을 누르면 온도 데이터 기록을 시작/중단합니다.  
         - 데이터가 기록될 때 빨간색으로 켜져 있습니다. 
 4. 온도데이터를 시각화하기 
+![showplot](/img/showplotter.png)
 5. 온도데이터를 저장하기  
     - 데이터는 `temperature_data.csv` 파일에 저장되고 새로 기록할 때마다 추가가됩니다.   
+    ![csvfile](/img/csvfile.png)
 
 ###  DataPi 제어하기 
 1. [simpletest.md](/simpletest/simpletest.md)을 참고하여 폴더에 있는 코드를 하나씩 실행해보기  
