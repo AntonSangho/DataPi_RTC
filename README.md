@@ -12,11 +12,15 @@
 ## 실습목록   
 ### DataPi로 데이터 수집   
 1. DataPi에 Micropython 설치하기  
-    - [Github](/https://github.com/microschool-kr/AI-Challenge-Biodiversity-DataPi-kit)에 접속하여 [Code] -> [Download Zip] 
+    1. [Github](/https://github.com/microschool-kr/AI-Challenge-Biodiversity-DataPi-kit)에 접속하여 [Code] -> [Download Zip] 
     ![download](/img/download.png)
-    - Micropython폴더에 `RPI_PICO_W-20231005-v1.21.0.uf2`파일을 RPI-RP2 드라이브에 옮기기 
+    2. DataPi를 컴퓨터에 연결하기  
+        - BootSEL 버튼을 누른 채로 USB연결
+        ![bootsel](/img/bootsel.png)
+        - RPI-RP2 드라이브가 연결됨 
+    3. Micropython폴더에 `RPI_PICO_W-20231005-v1.21.0.uf2`파일을 RPI-RP2 드라이브에 옮기기 
     ![draganddrop](/img/draganddrop.png)
-    - Thonny를 실행하여 RaspberryPi Pico가 포트로 잡히는지 확인![port](/img/port.png) 
+    4. Thonny를 실행하여 RaspberryPi Pico가 포트로 잡히는지 확인![port](/img/port.png) 
 2. Thonny를 이용하여 lib폴더를 Raspberry pi Pico에 업로드 하기  
 ![uploadto](./img/uploadto.png)
 3. Thonny로 `main.py` 실행하기   
