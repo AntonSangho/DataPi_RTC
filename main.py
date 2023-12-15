@@ -40,8 +40,11 @@ def Rbutton_handler(pin):
             recording_active = not recording_active
             if recording_active:
                 play_buzzer(2000)  # recording_active 시작 시 부저
-                file = open('temperature_data.csv', 'w')  # 파일 열기
-                file.write('Time,Temperature\n')
+                file = open('temperature_data.csv', 'a')  # 파일 열기
+                # 파일에 새 데이터 세트가 추가될 때마다 구분자 삽입
+                file.write("\n--- New Data ---\n")
+                if file.tell() == len("---New Data ---\n"): #파일이 새로 생성되었다면 
+                    file.write('Time,Temperature\n')
             else:
                 if file:
                     file.close()  # 파일 닫기
