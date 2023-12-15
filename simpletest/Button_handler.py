@@ -16,12 +16,16 @@ def Rbutton_handler(pin):
     global Rbutton_state
     # 버튼 상태 전환
     Rbutton_state = not Rbutton_state
+    print("Rbutton_state:", end =' ')
+    print(Rbutton_state)
     Yled.value(Rbutton_state)
 
 def Lbutton_handler(pin):
     global Lbutton_state
     # 버튼 상태 전환
     Lbutton_state = not Lbutton_state
+    print("Lbutton_state:", end =' ' )
+    print(Lbutton_state)
     Rled.value(Lbutton_state)
 
 # 버튼에 핸들러 등록
