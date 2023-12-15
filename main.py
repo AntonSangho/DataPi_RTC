@@ -6,13 +6,14 @@ import onewire, ds18x20
 # 글로벌 변수
 sensing_active = False
 recording_active = False
-recording_interval = 1  # 기록 간격을 초 단위로 설정 (예: 1초)
+recording_interval = 1  # 데이터 기록 간격을 초 단위로 설정 (예: 1초마다 데이터 기록)
+file = None # 파일 객체 초기화
+button_pressed_time = 0 # 버튼 눌린 시간 기록 
 
-# LED 및 버튼 설정
+# LED, 버튼, 부저 설정
 YLed = Pin(22, Pin.OUT)
 Rled = Pin(28, Pin.OUT)
 Rbutton = Pin(13, Pin.IN, Pin.PULL_UP)
-Lbutton = Pin(2, Pin.IN, Pin.PULL_UP)
 buzzer = PWM(Pin(15))
 
 # I2C 설정
@@ -29,54 +30,63 @@ roms = temp_sensor.scan()
 
 # 버튼 핸들러 함수
 def Rbutton_handler(pin):
-    global sensing_active
-    sensing_active = not sensing_active  # 상태 전환
+    global sensing_active, recording_active, file, button_pressed_time
 
-def Lbutton_handler(pin):
-    global recording_active, file
-    recording_active = not recording_active
-    if recording_active:
-        buzzer.duty_u16(30000)
-        buzzer.freq(1000)
-        utime.sleep(0.1)
-        buzzer.duty_u16(0)
-        # 파일 초기화 및 시작
-        file = open('temperature_data.csv', 'w')
-        file.write('Time,Temperature\n')
-    else:
-        buzzer.duty_u16(30000)
-        buzzer.freq(500)
-        utime.sleep(0.1)
-        buzzer.duty_u16(0)
-        file.close()  # 파일 닫기
+    current_time = utime.ticks_ms()
+    if pin.value() == 0:  # 버튼이 눌렸을 때
+        button_pressed_time = current_time
+    else:  # 버튼이 떼어졌을 때
+        if current_time - button_pressed_time > 1000:  # 버튼이 1초 이상 눌렸을 경우
+            recording_active = not recording_active
+            if recording_active:
+                play_buzzer(2000)  # recording_active 시작 시 부저
+                file = open('temperature_data.csv', 'w')  # 파일 열기
+                file.write('Time,Temperature\n')
+            else:
+                if file:
+                    file.close()  # 파일 닫기
+                    file = None
+                    play_buzzer(2000)   # recording_active 종료 시 부저
+        else:  # 버튼이 1초 미만으로 눌렸을 경우
+            sensing_active = not sensing_active
+            play_buzzer(1000)  # sensing_active 시작 시 부저
+
+
+# 부저를 울리는 함수
+def play_buzzer(freq):
+    buzzer.duty_u16(30000)
+    buzzer.freq(freq)
+    utime.sleep(0.1)
+    buzzer.duty_u16(0)
 
 # 버튼에 핸들러 등록
-Rbutton.irq(trigger=Pin.IRQ_FALLING, handler=Rbutton_handler)
-Lbutton.irq(trigger=Pin.IRQ_FALLING, handler=Lbutton_handler)
+#Rbutton.irq(trigger=Pin.IRQ_FALLING, handler=Rbutton_handler)
+Rbutton.irq(trigger=Pin.IRQ_FALLING | Pin.IRQ_RISING, handler=Rbutton_handler)
 
 # 메인 루프
 while True:
     if sensing_active:
+        YLed.value(1)  # YLed 켜기
         for rom in roms:
             temp_sensor.convert_temp()
             utime.sleep_ms(100)
             t = temp_sensor.read_temp(rom)
             print(t)
-            YLed.value(1)  # YLed 켜기
-            utime.sleep_ms(500)
             YLed.value(0)  # YLed 끄기
+            utime.sleep_ms(500)
     if recording_active:
         Rled.value(1)  # Rled 켜기
+        # 데이터 기록 로직
         for rom in roms:
             temp_sensor.convert_temp()
             utime.sleep_ms(100)
             t = temp_sensor.read_temp(rom)
-            ds3231.save_time() # save_time()함수는 RTC 모듈이 초기화되지 않은 것으로 가정하고 사용한 것이므로 한번 초기화한 이후에는 사용하지 않아도 무방합니다.
             dateTime = ds3231.get_time()
             timestamp = "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}".format(dateTime[0], dateTime[1], dateTime[2], dateTime[3], dateTime[4], dateTime[5])
             data_line = "{}, {:6.2f}\n".format(timestamp, t)
             print(t)
-            file.write(data_line)
+            if file:
+                file.write(data_line)
             utime.sleep(recording_interval)  # 사용자가 설정한 기록 간격에 따라 대기
     else:
         Rled.value(0)  # Rled 끄기
