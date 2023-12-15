@@ -6,7 +6,7 @@ import onewire, ds18x20
 # 글로벌 변수
 sensing_active = False
 recording_active = False
-recording_interval = 10  # 기록 간격을 초 단위로 설정 (예: 1초)
+recording_interval = 1  # 기록 간격을 초 단위로 설정 (예: 1초)
 
 # LED 및 버튼 설정
 YLed = Pin(22, Pin.OUT)
@@ -71,6 +71,7 @@ while True:
             temp_sensor.convert_temp()
             utime.sleep_ms(100)
             t = temp_sensor.read_temp(rom)
+            ds3231.save_time() # save_time()함수는 RTC 모듈이 초기화되지 않은 것으로 가정하고 사용한 것이므로 한번 초기화한 이후에는 사용하지 않아도 무방합니다.
             dateTime = ds3231.get_time()
             timestamp = "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}".format(dateTime[0], dateTime[1], dateTime[2], dateTime[3], dateTime[4], dateTime[5])
             data_line = "{}, {:6.2f}\n".format(timestamp, t)
