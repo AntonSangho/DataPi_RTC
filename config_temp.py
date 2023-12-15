@@ -5,5 +5,5 @@ wifi_config = {
 }
 
 api_config = { # OpenWeather 사이트의 키
-    'api_key': '6ddff3a807cf755a2b9a2aa4f919006d'
+    'api_key': 'your_api_key'
 }

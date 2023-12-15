@@ -1,25 +1,23 @@
+# import
 from machine import Pin
 import utime
 
-led1 = Pin(22, Pin.OUT) # RED LED 
-led2 = Pin(28, Pin.OUT) # Yellow LED
+# def 함수: LED 제어 함수 정의
+def led_on(led_pin):
+    led_pin.value(1)
 
-INTERVAL1 = 300 
-INTERVAL2 = 500
+def led_off(led_pin):
+    led_pin.value(0)
 
-time_previous1 = utime.ticks_ms() # get millisecond counter
-time_previous2 = time_previous1
+def led_toggle(led_pin):
+    led_pin.value(not led_pin.value())
 
+# GPIO 핀 설정
+led_pin = Pin(28, Pin.OUT)  # 예시로 빨간색 LED사용
+
+# while True 루프: LED 제어 예시
 while True:
-    time_current = utime.ticks_ms() # get current time
-
-    # Elapsed time
-    time_elapsed1 = utime.ticks_diff(time_current, time_previous1)
-    time_elapsed2 = utime.ticks_diff(time_current, time_previous2)
-
-    if time_elapsed1 > INTERVAL1:
-        led1.toggle()
-        time_previous1 = time_current
-    if time_elapsed2 > INTERVAL2:
-        led2.toggle()
-        time_previous2 = time_current
+    led_on(led_pin)     # LED 켜기
+    utime.sleep(1)
+    led_off(led_pin)    # LED 끄기
+    utime.sleep(1)

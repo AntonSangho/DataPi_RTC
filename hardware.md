@@ -1,6 +1,10 @@
 
 # DataPi 하드웨어 정보 
 
+### Raspberry pi PicoW pinout 
+<img src=https://www.raspberrypi.com/documentation/microcontrollers/images/pico-pinout.svg>
+
+
 ### 하드웨어 연결 
 
 | 구성 요소        | 연결된 GPIO 핀 |

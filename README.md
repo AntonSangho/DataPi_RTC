@@ -35,17 +35,32 @@
     ![csvfile](/img/csvfile.png)
 
 ###  DataPi 제어하기 
-1. [simpletest.md](/simpletest/simpletest.md)을 참고하여 폴더에 있는 코드를 하나씩 실행해보기  
-2. 코드를 수정해서 실행해보기 
+- [Blink.py](/simpletest/Blink.py) : 라즈베리파이 피코 W에 장착되어 있는 LED 점등 
+- [Button.py](/simpletest/Button.py) : 버튼 테스트
+- [Buzzer.py](/simpletest/Buzzer.py) : 버저 테스트
+- [LED.py](/simpletest/LED.py) : LED 테스트 
+- [Temp.py](/simpletest/Temp.py) : 온도센서 테스트 
+- [i2c.py](/simpletest/i2c.py) : 연결된 i2c장치 확인하기. 현재는 DS3231(0x68)와 at24c32(0x57)를 연결된 것을 확인가능 
+- [Button_handler](/simpletest/Button_handler.py) : 버튼의 상태에 따라서 함수를 정의하는 예제 
 ### Openweather API로 데이터 수집하기   
 1. [openweathermap](https://openweathermap.org/)에 접속하기 
-2. openweathermap에 회원 가입하기 
+2. openweathermap에 회원 가입하기하고 API Key발급받기  
+![APIKey](/img/APIKey.png)
 3. 알고 싶은 지역을 검색하기 
-4. 해당 지역은 본인의 API를 이용해서 확인하기
-5. [`config_temp.py`](/config_temp.py)에 Wifi정보와 Openweather API 키를 입력하고 `config.py`로 파일명 변경하기   
-6. [`Openweather.py`](/Openweather.py)을 실행하기 
+![search](/img/seoul.png)
+4. [`config_temp.py`](/config_temp.py)에 Wifi정보와 Openweather API 키를 입력하고 `config.py`로 파일명 변경하기   
+```python
+# config.py
+wifi_config = {
+    'ssid': 'your_ap_name', # Wifi AP 이름
+    'password': 'password_for_your_ap_here' #와이파이 비밀번호
+}
 
-## 문의하기 
-sangho@microschool.kr 으로 메일을 보내주세요. 
+api_config = { # OpenWeather 사이트의 키
+    'api_key': 'your_api_key'
+}
+```
+5. [`Openweather.py`](/Openweather.py)을 실행하기 
+![openweather](/img/openweather.png)
 
 
