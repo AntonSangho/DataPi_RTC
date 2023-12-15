@@ -1,40 +1,38 @@
-# DataPi Project
+# AI Challenge for Biodiversity 발대식 실습교육 
 
-### 하드웨어 연결 
+파일 및 폴더           | 내용
+:------------- |:-------------
+[lib](/lib/ds3231_port.py) | DS3231 RTC 모듈 라이브러리 
+[Micropython](/Micropython/RPI_PICO_W-20231005-v1.21.0.uf2) | 라즈베리파이 피코용 Micropython UF2파일   
+[simpletest](/simpletest/README.md) | DataPi를 제어하기 위한 기본동작 코드 
+[main.py](/main.py) |  DataPi로 온도데이터를 수집하는 Micropython 코드 
+[Openweather.py](/Openweather.py) | Openweather API를 활용하여 날씨정보를 가져오는 예제   
+[config_temp.py](/config_temp.py) | Openweather.py에서 필요로하는 Wifi정보와 API key 정보를 넣는 템플릿    
 
-| 구성 요소        | 연결된 GPIO 핀 |
-|----------------|---------------|
-| `Rbutton` (오른쪽 버튼) | GPIO 13번    |
-| `Lbutton` (왼쪽 버튼)   | GPIO 2번     |
-| `YLed`(노란색 LED)         | GPIO 22번    |
-| `Rled` (빨간색 LED)         | GPIO 28번    |
-| `buzzer`       | GPIO 15번    |
-| `DS3231 RTC 모듈` | SDA (GPIO 8번), SCL (GPIO 9번) |
-| `DS18x20 온도 센서` | GPIO 1번     |
-
-### [하드웨어 연결 테스트](/simpletest/README.md)
-
-# 온도 센서 측정하고 기록하기 : [main.py](/main.py) 
-## 설명 
-이 프로젝트는 Raspberry Pi Pico W 를 사용하여 DS18b20 센서로 온도를 측정하고, DS3231 RTC 모듈을 통해 시간을 기록하는 예제입니다. 버튼을 사용하여 각각 센싱과 데이터 기록 기능을 제어할 수 있습니다.
-
-### 버튼 기능  
-* `Rbutton` (오른쪽 버튼)  
+## 실습목록   
+### DataPi로 데이터 수집   
+1. DataPi에 Micropython 설치하기  
+2. lib폴더를 Raspberry pi Pico에 업로드 하기  
+3. `main.py` 실행하기   
+4. 버튼(오른쪽)으로 제어하기 
     - **1초 이하**로 누르면 온도 센싱 기능을 시작/중단합니다.   
     - **1초 이상**을 누르면 온도 데이터 기록을 시작/중단합니다. 
-### 온도 센싱 기능 
-'buzzer'가 울리고 `YLed`가 온도를 읽을 때마다 켜집니다.  
-### 온도 기록 기능  
-데이터는 `temperature_data.csv` 파일에 저장되고 새로 기록할 때마다 추가됩니다.   
-이 기능이 활성화되면 `Rled`가 켜지고, `buzzer`가 울립니다.
+4. 온도데이터를 시각화하기 
+5. 온도데이터를 저장하기  
+    - 데이터는 `temperature_data.csv` 파일에 저장되고 새로 기록할 때마다 추가됩니다.   
 
-
-
-
-# 오픈 API를 활용한 세계 날씨 데이터 가져오기 : [Openweather.py](/Openweather.py)  
-
+###  DataPi 제어하기 
+1. [simpletest.md](/simpletest/simpletest.md)을 참고하여 폴더에 있는 코드를 하나씩 실행해보기  
+2. 코드를 수정해서 실행해보기 
+### Openweather API로 데이터 수집하기   
 1. [openweathermap](https://openweathermap.org/)에 접속하기 
 2. openweathermap에 회원 가입하기 
 3. 알고 싶은 지역을 검색하기 
 4. 해당 지역은 본인의 API를 이용해서 확인하기
+5. [`config_temp.py`](/config_temp.py)에 Wifi정보와 Openweather API 키를 입력하고 `config.py`로 파일명 변경하기   
+6. [`Openweather.py`](/Openweather.py)을 실행하기 
+
+## 문의하기 
+sangho@microschool.kr 으로 메일을 보내주세요. 
+
 
