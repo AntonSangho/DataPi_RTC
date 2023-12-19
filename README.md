@@ -1,7 +1,7 @@
 # AI Challenge for Biodiversity 발대식 실습교육 
 
 ## 업데이트 사항 
-- 2023년 12월19일  main.py 처음 실행시 시간이 동기화 되지 않은 문제 해결
+- 2023년 12월19일  [main.py 처음 실행시 시간이 동기화 되지 않은 문제 해결](https://github.com/AntonSangho/DataPi_RTC/commit/98ae0f3f3eccca6bde4caa0f7b1e2f9e63bbf32c)
 
 파일 및 폴더           | 내용
 :------------- |:-------------
