@@ -84,6 +84,7 @@ while True:
             temp_sensor.convert_temp()
             utime.sleep_ms(100)
             t = temp_sensor.read_temp(rom)
+            ds3231.save_time()
             dateTime = ds3231.get_time()
             timestamp = "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}".format(dateTime[0], dateTime[1], dateTime[2], dateTime[3], dateTime[4], dateTime[5])
             data_line = "{}, {:6.2f}\n".format(timestamp, t)
