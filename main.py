@@ -8,7 +8,10 @@ sensing_active = False
 recording_active = False
 recording_interval = 1  # 데이터 기록 간격을 초 단위로 설정 (예: 1초마다 데이터 기록)
 file = None # 파일 객체 초기화
-button_pressed_time = 0 # 버튼 눌린 시간 기록 
+button_pressed_time = 0 # 버튼 눌린 시간 기록
+
+write_count = 0 # 안정적인 파일쓰기를 위한 카운터 초기화
+write_threshold = 50 # 몇 회이상 쓰이면 파일을 다시 열도록 횟수 설정 
 
 # LED, 버튼, 부저 설정
 YLed = Pin(22, Pin.OUT)
@@ -91,6 +94,15 @@ while True:
             print(t)
             if file:
                 file.write(data_line)
+                write_count += 1 # 쓰기 횟수 하나 증가
+                
+                # 만약 쓰기 횟수가 도달 했을 시에
+                if write_count >= write_threshold:
+                    # 파일을 닫고 다시 열기
+                    file.close()
+                    file = open('temperature_data.csv','a')
+                    write_count = 0 # 쓰기 카운터를 다시 원상태로
+                    print("reopen file")
             utime.sleep(recording_interval)  # 사용자가 설정한 기록 간격에 따라 대기
     else:
         Rled.value(0)  # Rled 끄기
